@@ -82,7 +82,7 @@ const registerSuccess = (payload) =>{
   export const Register=(user)=>{
     return(dispatch)=>{
         dispatch(registerRequest());
-        axios.post(`http://localhost:5500/user/register`,user).then(res=>dispatch(registerSuccess(res.data)))
+        axios.post(`https://getlocationbackend.up.railway.app/user/register`,user).then(res=>dispatch(registerSuccess(res.data)))
         .catch(err=>dispatch(registerFaluire(err)))
     }
 }
@@ -91,7 +91,7 @@ const registerSuccess = (payload) =>{
 export const Login=(user)=>{
   return(dispatch)=>{
       dispatch(loginRequest());
-      axios.post(`http://localhost:5500/user/login`,user).then(res=>dispatch(loginSuccess(res.data)))
+      axios.post(`https://getlocationbackend.up.railway.app/user/login`,user).then(res=>dispatch(loginSuccess(res.data)))
       .catch(err=>dispatch(loginFaluire(err)))
   }
 }
@@ -100,7 +100,7 @@ export const Login=(user)=>{
 export const sendgetlocation=(user,id)=>{
   return(dispatch)=>{
       dispatch(sendgetlocationRequest());
-      axios.put(`http://localhost:5500/user/findcustomer/${id}`,user).then(res=>dispatch(sendgetlocationsuccess(res.data)))
+      axios.put(`https://getlocationbackend.up.railway.app/user/findcustomer/${id}`,user).then(res=>dispatch(sendgetlocationsuccess(res.data)))
       .catch(err=>dispatch(sendgetlocationsuccess(err)))
   }
 }
