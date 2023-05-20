@@ -10,8 +10,8 @@ function Allroutes() {
         <Routes>
             <Route path="/customer" element={<Customer />} />
             <Route path="/serviceProvider" element={<ServiceProvider/>} />
-            <Route path='/register' element={<Registerpage/>}/>
-            <Route path='/' element = {<LoginPage/>} />
+            <Route path='/' element={<Registerpage/>}/>
+            <Route path='/login' element = {<LoginPage/>} />
         </Routes>
     )
 }

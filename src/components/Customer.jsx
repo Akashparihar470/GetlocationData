@@ -16,13 +16,16 @@ const Customer = () => {
   const map = useRef(null);
   const user = useSelector(store => store.Alldata.login)
   const dispatch = useDispatch();
-  const Loading = useSelector(store => store.Alldata.Loaderlocation)
+  const Loading = useSelector(store => store.Alldata.Loaderlocation);
+  const Islogin = useSelector(store => store.Alldata.loginSuccess);
+  const [lng,setLng] = useState();
+  const [lat,setLat] = useState();
 
   // if switch is enable then it will send the request
   const handlecheck = (map, position) => {
-    if (isChecked) {
+    if (isChecked && Islogin) {
       // if(!postdata?.status){
-      const data = { coordinates: [position.coords.longitude, position.coords.latitude], radius: 10, type: "serviceProvider" };
+      const data = { coordinates: [position.coords.longitude, position.coords.latitude], radius: 5, type: "serviceProvider" };
       dispatch(sendgetlocation(data, user._id))
 
 
@@ -31,7 +34,7 @@ const Customer = () => {
 
     }
   }
-  console.log(isChecked)
+  console.log(Loading)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -42,6 +45,8 @@ const Customer = () => {
           center: [position.coords.longitude, position.coords.latitude],
           zoom: 15,
         });
+        setLat(position.coords.latitude);
+        setLng(position.coords.longitude)
 
         // to check the switch
         handlecheck(map, position);
@@ -77,10 +82,10 @@ const Customer = () => {
     <>
       <Switch onChange={handleSwitchChange} isChecked={isChecked} />
       <div ref={mapContainer} style={{ width: '100%', height: '500px' }}></div>
-      <SimpleGrid columns={[1, 2, 2, 2]} spacing={2}>
-        {Loading || !isChecked ? <Progress size='xs' isIndeterminate /> :
+      <SimpleGrid columns={[1, 2, 2, 4]} spacing={2}>
+        {Loading || !isChecked ? <Progress size='xs' width={"100%"} isIndeterminate /> :
           locations?.map(e => <Box borderRadius={2}>
-            <Card title={e.fullName} phoneNumber={e.number} vehicleNo={e.vehicleNo} key={e._id} />
+            <Card title={e.fullName} phoneNumber={e.number} vehicleNo={e.vehicleNo} key={e._id} longitude={lng} latitude={lat}/>
           </Box>
           )}
       </SimpleGrid>

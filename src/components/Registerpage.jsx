@@ -12,12 +12,13 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux"
-import { useToast } from '@chakra-ui/react'
+import { useToast, Text } from '@chakra-ui/react'
 import { CgGhostCharacter } from "react-icons/cg";
 import { BsCarFront } from "react-icons/bs"
 import { Register } from '../redux/action';
 import { useForm } from "react-hook-form"
 import { useNavigate } from 'react-router';
+import {Link as RouterLink} from "react-router-dom"
 
 
 export default function Registerpage() {
@@ -129,6 +130,11 @@ export default function Registerpage() {
               <Button type='submit' colorScheme={'blue'} variant={'solid'}>
                 Sign in
               </Button>
+              <Stack pt={6}>
+              <Text align={'center'}>
+                Already a user? <RouterLink style={{color:"blue"}} to="/login">Login</RouterLink>
+              </Text>
+            </Stack>
             </Stack>
           </form>
 
