@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import "./map.css";
 import axios from "axios"
-import { Switch, SimpleGrid, Progress, Box } from '@chakra-ui/react';
+import { Switch, SimpleGrid, Progress, Box, RadioGroup, Stack, Radio, Flex,Alert,AlertIcon } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendgetlocation } from '../redux/action';
 import Card from './Card';
@@ -18,23 +18,31 @@ const Customer = () => {
   const dispatch = useDispatch();
   const Loading = useSelector(store => store.Alldata.Loaderlocation);
   const Islogin = useSelector(store => store.Alldata.loginSuccess);
-  const [lng,setLng] = useState();
-  const [lat,setLat] = useState();
+  const [lng, setLng] = useState();
+  const [lat, setLat] = useState();
+  const [value, setValue] = useState("Car")
 
   // if switch is enable then it will send the request
   const handlecheck = (map, position) => {
-    if (isChecked && Islogin) {
-      // if(!postdata?.status){
-      const data = { coordinates: [position.coords.longitude, position.coords.latitude], radius: 5, type: "serviceProvider" };
-      dispatch(sendgetlocation(data, user._id))
+    if (isChecked && Islogin ) {
+      if (value !== undefined) {
+        // if(!postdata?.status){
+        const data = { coordinates: [position.coords.longitude, position.coords.latitude], radius: 10, type: "serviceProvider", category: value };
+        dispatch(sendgetlocation(data, user._id))
 
 
-      new mapboxgl.Marker().setLngLat([position.coords.longitude, position.coords.latitude]).addTo(map.current);
+        new mapboxgl.Marker().setLngLat([position.coords.longitude, position.coords.latitude]).addTo(map.current);
+      }else{
+        <Alert status='error'>
+        <AlertIcon />
+        Please select Vehicle Type
+         </Alert>
+      }
+
 
 
     }
   }
-  console.log(Loading)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -58,7 +66,7 @@ const Customer = () => {
     }
 
 
-  }, [isChecked]);
+  }, [isChecked,value]);
 
   useEffect(() => {
     // Add markers to the map for each location
@@ -75,20 +83,34 @@ const Customer = () => {
     setIsChecked(!isChecked);
     // Perform any other actions you want to do when the switch is toggled
   }
-  console.log(locations);
+  
 
 
   return (
     <>
-      <Switch onChange={handleSwitchChange} isChecked={isChecked} />
+      <Flex>
+        <Switch onChange={handleSwitchChange} isChecked={isChecked} m={2} />
+        <RadioGroup onChange={setValue} value={value} ml={6}>
+          <Stack direction='row' p={"4px"}>
+            <Radio value='Car'>Car</Radio>
+            <Radio value='Ricksaw'>Ricksaw</Radio>
+            <Radio value='Tempo'>Tempo</Radio>
+            <Radio value='Truck'>Truck</Radio>
+          </Stack>
+        </RadioGroup>
+      </Flex>
       <div ref={mapContainer} style={{ width: '100%', height: '500px' }}></div>
       <SimpleGrid columns={[1, 2, 2, 4]} spacing={2}>
         {Loading || !isChecked ? <Progress size='xs' width={"100%"} isIndeterminate /> :
           locations?.map(e => <Box borderRadius={2}>
-            <Card title={e.fullName} phoneNumber={e.number} vehicleNo={e.vehicleNo} key={e._id} longitude={lng} latitude={lat}/>
+            <Card title={e.fullName} phoneNumber={e.number} vehicleNo={e.vehicleNo} key={e._id} longitude={lng} latitude={lat} />
           </Box>
           )}
       </SimpleGrid>
+      {isChecked && value === undefined ? <Alert status='error'>
+        <AlertIcon />
+        Please select Vehicle Type
+         </Alert>:null}
     </>
   );
 };
