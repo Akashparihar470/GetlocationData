@@ -47,7 +47,7 @@ export default function Registerpage() {
     if (isError || isSuccess) {
       showToast(Alldata)
       setTimeout(() => {
-        navigate("/", { replace: true })
+        navigate("/login", { replace: true })
       }, 2000)
     }
 

@@ -6,10 +6,12 @@ import { Switch, SimpleGrid, Progress, Box, RadioGroup, Stack, Radio, Flex,Alert
 import { useDispatch, useSelector } from 'react-redux';
 import { sendgetlocation } from '../redux/action';
 import Card from './Card';
+import { useNavigate } from 'react-router';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWthc2hzaW5naDEzIiwiYSI6ImNsaDdiMDZlaDBlaHEzcHV5ZW1qYWx6eXgifQ.3qS2Tarh3IoGolgrXboe5A';
 
 const Customer = () => {
+  const navigate = useNavigate()
   const [isChecked, setIsChecked] = useState(false);
   const locations = useSelector(store => store.Alldata.locations);
   const mapContainer = useRef(null);
@@ -20,7 +22,7 @@ const Customer = () => {
   const Islogin = useSelector(store => store.Alldata.loginSuccess);
   const [lng, setLng] = useState();
   const [lat, setLat] = useState();
-  const [value, setValue] = useState("Car")
+  const [value, setValue] = useState("Car");
 
   // if switch is enable then it will send the request
   const handlecheck = (map, position) => {
@@ -38,13 +40,14 @@ const Customer = () => {
         Please select Vehicle Type
          </Alert>
       }
-
-
-
     }
   }
 
+
   useEffect(() => {
+    if(!Islogin){
+       navigate("/login",{replace:true})
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         map.current = new mapboxgl.Map({
@@ -66,7 +69,7 @@ const Customer = () => {
     }
 
 
-  }, [isChecked,value]);
+  }, [isChecked,value,Islogin]);
 
   useEffect(() => {
     // Add markers to the map for each location
