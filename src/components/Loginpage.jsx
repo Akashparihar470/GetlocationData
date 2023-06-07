@@ -18,6 +18,7 @@ import { useToast } from '@chakra-ui/react';
 import { useDispatch,useSelector } from 'react-redux';
 import { Login } from '../redux/action';
 import { useNavigate } from 'react-router';
+import { Link as RouterLink } from 'react-router-dom';
 
   
   export default function LoginPage() {
@@ -54,7 +55,7 @@ import { useNavigate } from 'react-router';
     const showToast = (Alldata) => {
         toast({
           title: isError ? Alldata.error.name : 'Login',
-          description: isError ? Alldata.error.response.data.error : "Login Successfull.",
+          description: isError ? Alldata?.error?.response?.data.error : "Login Successfull.",
           status: isError ? 'error' : "success",
           duration: 3000,
           isClosable: true,
@@ -64,19 +65,20 @@ import { useNavigate } from 'react-router';
       console.log(logindata);
       console.log(Alldata,"lll")
     return (
-      <Flex
+      <Box
+        mt={40}
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}>
+       >
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <Stack align={'center'}>
-            <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+            <Heading fontSize={'4xl'} color={"#0B86C2"}>Login</Heading>
           </Stack>
           <Box
             rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
+            // bg={useColorModeValue('white', 'gray.700')}
+            // boxShadow={'lg'}
             p={8}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
@@ -94,22 +96,28 @@ import { useNavigate } from 'react-router';
                   align={'start'}
                   justify={'space-between'}>
                   <Checkbox>Remember me</Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
+                  <Link color={'#0B86C2'}>Forgot password?</Link>
                 </Stack>
                 <Button
                   type='submit'
-                  bg={'blue.400'}
+                  bg={'#0B86C2'}
                   color={'white'}
                   _hover={{
                     bg: 'blue.500',
                   }}>
                   Sign in
                 </Button>
+                
               </Stack>
             </Stack>
             </form>
+            <Stack pt={6}>
+                <Text align={'center'}>
+                  New user? <RouterLink style={{ color: "#0B86C2" }} to="/register">Register</RouterLink>
+                </Text>
+              </Stack>
           </Box>
         </Stack>
-      </Flex>
+      </Box>
     );
   }

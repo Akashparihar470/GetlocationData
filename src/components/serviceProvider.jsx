@@ -2,10 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import "./map.css";
 import axios from "axios"
-import { Switch, Progress } from '@chakra-ui/react';
+import { Switch, Progress,FormLabel, Flex } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendgetlocation } from '../redux/action';
 import Card from './Card';
+import { useNavigate } from 'react-router';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWthc2hzaW5naDEzIiwiYSI6ImNsaDdiMDZlaDBlaHEzcHV5ZW1qYWx6eXgifQ.3qS2Tarh3IoGolgrXboe5A';
 
@@ -15,8 +16,10 @@ const ServiceProvider = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const user = useSelector(store => store.Alldata.login);
-  const dispatch = useDispatch()
-  const Loading = useSelector(store => store.Alldata.isLoading)
+  const dispatch = useDispatch();
+  const Loading = useSelector(store => store.Alldata.isLoading);
+  const navigate = useNavigate();
+  const Islogin = useSelector(store => store.Alldata.loginSuccess)
 
   // if switch is enable then it will send the request
   const handlecheck = (map, position) => {
@@ -30,13 +33,16 @@ const ServiceProvider = () => {
   }
   console.log(locations)
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (!Islogin) {
+      navigate("/", { replace: true })
+    }
+    else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         map.current = new mapboxgl.Map({
           container: mapContainer.current,
           style: 'mapbox://styles/mapbox/streets-v11',
           center: [position.coords.longitude, position.coords.latitude],
-          zoom: 15,
+          zoom: 11,
         });
 
         // to check the switch
@@ -72,10 +78,13 @@ const ServiceProvider = () => {
 
   return (
     <>
-      <Switch onChange={handleSwitchChange} isChecked={isChecked} />
-      {Loading && 
-      <Progress size='xs' isIndeterminate />}
-      <div ref={mapContainer} style={{ width: '100%', height: '500px' }}></div>
+     <Flex p={2} justifyContent={"space-between"}>
+          <FormLabel fontSize={14} fontWeight={700} color={"#0B86C2"}>Current Location:</FormLabel>
+          <Switch onChange={handleSwitchChange} isChecked={isChecked} />
+      </Flex>
+      {Loading &&
+        <Progress size='xs' isIndeterminate />}
+      <div ref={mapContainer} style={{ width: '100%', height: '830px' }}></div>
       {/* <Card/> */}
     </>
   );

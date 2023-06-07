@@ -13,7 +13,7 @@ function Card({ title, phoneNumber, vehicleNo, key, longitude, latitude }) {
  
     return (
         // <Box p={4} lineHeight={"10px"} bg={"teal"}>
-        <Accordion allowToggle bg={'teal.400'} key={key} borderRadius={10} m={2}>
+        <Accordion allowToggle bg={'telegram.400'} key={key} borderRadius={10} m={2}>
             <AccordionItem>
                 <h2>
                     <AccordionButton>

@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { useToast, Text, Select } from '@chakra-ui/react'
-import { CgGhostCharacter } from "react-icons/cg";
+import { CgProfile } from "react-icons/cg";
 import { BsCarFront } from "react-icons/bs"
 import { Register } from '../redux/action';
 import { useForm } from "react-hook-form"
@@ -47,21 +47,21 @@ export default function Registerpage() {
     if (isError || isSuccess) {
       showToast(Alldata)
       setTimeout(() => {
-        navigate("/login", { replace: true })
+        navigate("/", { replace: true })
       }, 2000)
     }
 
   }, [isError, isSuccess])
 
-  const handlecheck = () => {
-    if (isServiceProvider) {
-      setIsServiceProvider(false);
-      setValue("type", "customer")
-    } else {
-      setIsServiceProvider(true);
+  const handleServiceProvider = () => {
+     setIsServiceProvider(true);
       setValue("type", "serviceProvider")
+  }
 
-    }
+  const handleCustomer = () => {
+        setIsServiceProvider(false);
+      setValue("type", "customer")
+
   }
 
 
@@ -77,16 +77,19 @@ export default function Registerpage() {
   }
 
 
+
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
       <Flex p={8} flex={1} align={'center'} justify={'center'}>
-        <Stack spacing={4} w={'full'} maxW={'md'}>
-          <Heading fontSize={'2xl'}>Register as {isServiceProvider ? "ServiceProvider" : "Customer"}</Heading>
-          <Stack direction='row' spacing={4}>
-            <Button leftIcon={<CgGhostCharacter />} onClick={handlecheck} colorScheme='teal' variant={isServiceProvider ? 'outline' : 'solid'} >
+        <Stack spacing={4} w={'full'} mx={"auto"} maxW={'lg'}  py={12} px={6}>
+          <Stack align={"center"} mb={8}>
+             <Heading fontSize={'4xl'} color={"#0B86C2"}>Register</Heading>
+          </Stack>
+          <Stack direction='row' spacing={4} >
+            <Button leftIcon={<CgProfile />} onClick={handleCustomer} colorScheme={"telegram"}  variant={isServiceProvider ? 'outline' : 'solid'} >
               Customer
             </Button>
-            <Button leftIcon={<BsCarFront />} onClick={handlecheck} colorScheme='teal' variant={isServiceProvider ? 'solid' : 'outline'}>
+            <Button leftIcon={<BsCarFront />} onClick={handleServiceProvider} colorScheme={"telegram"} variant={isServiceProvider ? 'solid' : 'outline'}>
               ServiceProvider
             </Button>
           </Stack>
@@ -128,29 +131,20 @@ export default function Registerpage() {
                 align={'start'}
                 justify={'space-between'}>
                 <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.500'}>Forgot password?</Link>
+                <Link color={'#0B86C2'}>Forgot password?</Link>
               </Stack>
-              <Button type='submit' colorScheme={'blue'} variant={'solid'}>
+              <Button type='submit' bg={'#0B86C2'} color={"white"} variant={'solid'}>
                 Sign in
               </Button>
               <Stack pt={6}>
                 <Text align={'center'}>
-                  Already a user? <RouterLink style={{ color: "blue" }} to="/login">Login</RouterLink>
+                  Already a user? <RouterLink style={{ color: "#0B86C2" }} to="/">Login</RouterLink>
                 </Text>
               </Stack>
             </Stack>
           </form>
 
         </Stack>
-      </Flex>
-      <Flex flex={1}>
-        <Image
-          alt={'Login Image'}
-          objectFit={'cover'}
-          src={
-            'https://www.telekom.com/resource/image/417756/landscape_ratio4x3/1296/972/b12f3ee21d297374c1fb7793c9c4b132/0FB99A112D7197D8F7FC0D73E1880543/bi-schmuckbild-iot-kugeln-en.jpg'
-          }
-        />
       </Flex>
     </Stack>
   );
