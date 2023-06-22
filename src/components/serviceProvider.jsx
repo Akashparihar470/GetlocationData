@@ -8,7 +8,7 @@ import { sendgetlocation } from '../redux/action';
 import Card from './Card';
 import { useNavigate } from 'react-router';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWthc2hzaW5naDEzIiwiYSI6ImNsaDdiMDZlaDBlaHEzcHV5ZW1qYWx6eXgifQ.3qS2Tarh3IoGolgrXboe5A';
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWthc2hzaW5naDEzIiwiYSI6ImNsajZ1eTY3aTBnMngzbXFwemVoZWNqNGMifQ.9ekt8k3lSDWzaUEOC1i99g';
 
 const ServiceProvider = () => {
   const [isChecked, setIsChecked] = useState(false);
