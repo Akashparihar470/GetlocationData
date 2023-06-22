@@ -29,7 +29,7 @@ import { MdLocationSearching } from "react-icons/md"
 import Category from './Category';
 import Allservices from './Allservices';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWthc2hzaW5naDEzIiwiYSI6ImNsaDdiMDZlaDBlaHEzcHV5ZW1qYWx6eXgifQ.3qS2Tarh3IoGolgrXboe5A';
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWthc2hzaW5naDEzIiwiYSI6ImNsajZ1eTY3aTBnMngzbXFwemVoZWNqNGMifQ.9ekt8k3lSDWzaUEOC1i99g';
 
 
 const Customer = () => {
