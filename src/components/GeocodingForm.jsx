@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { GrLocation } from "react-icons/gr";
 import { RiBookmark3Fill } from "react-icons/ri"
 
-const geocodingClient = MapboxGeocoding({ accessToken: "pk.eyJ1IjoiYWthc2hzaW5naDEzIiwiYSI6ImNsaDdiMDZlaDBlaHEzcHV5ZW1qYWx6eXgifQ.3qS2Tarh3IoGolgrXboe5A" });
+const geocodingClient = MapboxGeocoding({ accessToken: 'pk.eyJ1IjoiYWthc2hzaW5naDEzIiwiYSI6ImNsajZ1eTY3aTBnMngzbXFwemVoZWNqNGMifQ.9ekt8k3lSDWzaUEOC1i99g' });
 
 const GeocodingForm = ({ setSelectedAddress }) => {
   const [searchQuery, setSearchQuery] = useState('');
